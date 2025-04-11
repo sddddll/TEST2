@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频通话</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#2196F3',secondary:'#FF4141'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #FAFAFA;
+            width: 375px;
+            min-height: 762px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .contact-list::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="fixed top-0 left-0 w-full bg-white shadow-sm z-10">
+        <div class="flex items-center justify-between px-4 h-14">
+            <div class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                <i class="ri-arrow-left-s-line ri-lg"></i>
+            </div>
+            <h1 class="text-lg font-medium">视频通话</h1>
+            <div class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                <i class="ri-emergency-alert-line ri-lg text-secondary"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 标签页导航 -->
+    <div class="fixed top-14 left-0 w-full bg-white z-10 border-b">
+        <div class="flex items-center justify-around">
+            <div class="tab-btn active flex-1 text-center py-3 cursor-pointer" data-tab="contacts">
+                <span class="text-primary font-medium">联系人</span>
+                <div class="h-0.5 w-12 bg-primary mx-auto mt-1"></div>
+            </div>
+            <div class="tab-btn flex-1 text-center py-3 cursor-pointer" data-tab="history">
+                <span class="text-gray-500">通话记录</span>
+                <div class="h-0.5 w-12 bg-transparent mx-auto mt-1"></div>
+            </div>
+            <div class="tab-btn flex-1 text-center py-3 cursor-pointer" data-tab="dial">
+                <span class="text-gray-500">拨号</span>
+                <div class="h-0.5 w-12 bg-transparent mx-auto mt-1"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="pt-28 pb-16 px-4">
+        <!-- 联系人列表 -->
+        <div id="contacts" class="tab-content active">
+            <!-- 紧急联系人 -->
+            <div class="mb-6">
+                <div class="flex items-center mb-2">
+                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                        <i class="ri-alert-line ri-sm text-secondary"></i>
+                    </div>
+                    <h2 class="text-sm font-medium text-secondary">紧急联系人</h2>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="flex items-center p-3 border-b border-gray-100 cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mr-3 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20middle-aged%20Asian%20woman%20with%20short%20hair%2C%20warm%20smile%2C%20professional%20headshot%2C%20soft%20lighting%2C%20natural%20look%2C%20isolated%20on%20light%20background&width=100&height=100&seq=1&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-medium">李医生</h3>
+                            <p class="text-xs text-gray-500">社区医院 - 主治医师</p>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full cursor-pointer">
+                            <i class="ri-vidicon-line ri-lg text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mr-3 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20middle-aged%20Asian%20man%20with%20glasses%2C%20professional%20attire%2C%20warm%20smile%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=2&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-medium">张护士长</h3>
+                            <p class="text-xs text-gray-500">社区医院 - 护理部主任</p>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full cursor-pointer">
+                            <i class="ri-vidicon-line ri-lg text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 家人 -->
+            <div class="mb-6">
+                <div class="flex items-center mb-2">
+                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                        <i class="ri-home-heart-line ri-sm text-primary"></i>
+                    </div>
+                    <h2 class="text-sm font-medium">家人</h2>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="flex items-center p-3 border-b border-gray-100 cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mr-3 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20young%20Asian%20woman%20in%20her%2030s%2C%20casual%20modern%20clothing%2C%20natural%20smile%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=3&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-medium">刘晓华</h3>
+                            <p class="text-xs text-gray-500">女儿</p>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full cursor-pointer">
+                            <i class="ri-vidicon-line ri-lg text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 border-b border-gray-100 cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mr-3 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20young%20Asian%20man%20in%20his%2020s%2C%20casual%20modern%20clothing%2C%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=4&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-medium">刘明宇</h3>
+                            <p class="text-xs text-gray-500">孙子</p>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full cursor-pointer">
+                            <i class="ri-vidicon-line ri-lg text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mr-3 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20middle-aged%20Asian%20man%2C%20casual%20smart%20clothing%2C%20warm%20smile%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=5&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-medium">王建国</h3>
+                            <p class="text-xs text-gray-500">女婿</p>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full cursor-pointer">
+                            <i class="ri-vidicon-line ri-lg text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 医护人员 -->
+            <div class="mb-6">
+                <div class="flex items-center mb-2">
+                    <div class="w-4 h-4 flex items-center justify-center mr-1">
+                        <i class="ri-heart-pulse-line ri-sm text-primary"></i>
+                    </div>
+                    <h2 class="text-sm font-medium">医护人员</h2>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="flex items-center p-3 border-b border-gray-100 cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mr-3 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=portrait%20of%20an%20Asian%20doctor%2C%20white%20coat%2C%20stethoscope%2C%20professional%20medical%20setting%2C%20warm%20smile%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=6&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-medium">陈医生</h3>
+                            <p class="text-xs text-gray-500">家庭医生 - 内科</p>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full cursor-pointer">
+                            <i class="ri-vidicon-line ri-lg text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center p-3 cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mr-3 overflow-hidden">
+                            <img src="https://readdy.ai/api/search-image?query=portrait%20of%20an%20Asian%20female%20nurse%2C%20professional%20uniform%2C%20caring%20expression%2C%20medical%20setting%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=7&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-base font-medium">王护士</h3>
+                            <p class="text-xs text-gray-500">社区医院 - 护士</p>
+                        </div>
+                        <div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full cursor-pointer">
+                            <i class="ri-vidicon-line ri-lg text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 通话记录 -->
+        <div id="history" class="tab-content">
+            <div class="bg-white rounded-lg shadow-sm">
+                <div class="px-3 py-2 border-b border-gray-100">
+                    <p class="text-xs text-gray-500">今天</p>
+                </div>
+                <div class="flex items-center p-3 border-b border-gray-100 cursor-pointer">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mr-3 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20young%20Asian%20woman%20in%20her%2030s%2C%20casual%20modern%20clothing%2C%20natural%20smile%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=3&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-base font-medium">刘晓华</h3>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                <i class="ri-vidicon-line ri-sm text-primary"></i>
+                            </div>
+                            <p class="text-xs text-gray-500">今天 10:30 · 通话时长 15:20</p>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                        <i class="ri-vidicon-line ri-lg text-primary"></i>
+                    </div>
+                </div>
+                <div class="flex items-center p-3 cursor-pointer">
+                    <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mr-3 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20middle-aged%20Asian%20woman%20with%20short%20hair%2C%20warm%20smile%2C%20professional%20headshot%2C%20soft%20lighting%2C%20natural%20look%2C%20isolated%20on%20light%20background&width=100&height=100&seq=1&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-base font-medium">李医生</h3>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                <i class="ri-vidicon-line ri-sm text-primary"></i>
+                            </div>
+                            <p class="text-xs text-gray-500">今天 08:15 · 通话时长 10:05</p>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                        <i class="ri-vidicon-line ri-lg text-primary"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-sm mt-4">
+                <div class="px-3 py-2 border-b border-gray-100">
+                    <p class="text-xs text-gray-500">昨天</p>
+                </div>
+                <div class="flex items-center p-3 border-b border-gray-100 cursor-pointer">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mr-3 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20young%20Asian%20man%20in%20his%2020s%2C%20casual%20modern%20clothing%2C%20friendly%20smile%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=4&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-base font-medium">刘明宇</h3>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                <i class="ri-vidicon-line ri-sm text-primary"></i>
+                            </div>
+                            <p class="text-xs text-gray-500">昨天 19:45 · 通话时长 23:10</p>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                        <i class="ri-vidicon-line ri-lg text-primary"></i>
+                    </div>
+                </div>
+                <div class="flex items-center p-3 cursor-pointer">
+                    <div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mr-3 overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=portrait%20of%20an%20Asian%20doctor%2C%20white%20coat%2C%20stethoscope%2C%20professional%20medical%20setting%2C%20warm%20smile%2C%20clean%20background%2C%20high%20quality%20headshot&width=100&height=100&seq=6&orientation=squarish" class="w-full h-full object-cover" alt="联系人头像">
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-base font-medium">陈医生</h3>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-1">
+                                <i class="ri-vidicon-line ri-sm text-primary"></i>
+                            </div>
+                            <p class="text-xs text-gray-500">昨天 15:20 · 通话时长 08:35</p>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 flex items-center justify-center cursor-pointer">
+                        <i class="ri-vidicon-line ri-lg text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 拨号键盘 -->
+        <div id="dial" class="tab-content">
+            <div class="bg-white rounded-lg shadow-sm p-4 mb-4">
+                <input type="text" class="w-full text-2xl text-center border-none focus:outline-none" placeholder="输入电话号码">
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">1</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">2</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">3</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">4</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">5</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">6</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">7</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">8</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">9</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">*</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">0</div>
+                <div class="aspect-square flex items-center justify-center bg-white rounded-lg shadow-sm text-2xl font-medium cursor-pointer">#</div>
+            </div>
+            
+            <div class="flex justify-center">
+                <div class="w-16 h-16 flex items-center justify-center bg-primary rounded-full cursor-pointer">
+                    <i class="ri-vidicon-line ri-2x text-white"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部标签栏 -->
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 z-10">
+        <div class="grid grid-cols-5 h-16">
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-home-5-line ri-lg text-gray-500"></i>
+                </div>
+                <span class="text-xs text-gray-500 mt-1">首页</span>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-service-line ri-lg text-gray-500"></i>
+                </div>
+                <span class="text-xs text-gray-500 mt-1">服务</span>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-vidicon-fill ri-lg text-primary"></i>
+                </div>
+                <span class="text-xs text-primary font-medium mt-1">视频</span>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-heart-pulse-line ri-lg text-gray-500"></i>
+                </div>
+                <span class="text-xs text-gray-500 mt-1">健康</span>
+            </div>
+            <div class="flex flex-col items-center justify-center cursor-pointer">
+                <div class="w-6 h-6 flex items-center justify-center">
+                    <i class="ri-user-line ri-lg text-gray-500"></i>
+                </div>
+                <span class="text-xs text-gray-500 mt-1">我的</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 视频通话弹窗 -->
+    <div id="call-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="w-full h-full bg-black relative">
+            <!-- 对方视频 -->
+            <div class="w-full h-full flex items-center justify-center">
+                <img src="https://readdy.ai/api/search-image?query=portrait%20of%20a%20middle-aged%20Asian%20woman%20with%20short%20hair%2C%20warm%20smile%2C%20professional%20headshot%2C%20soft%20lighting%2C%20natural%20look%2C%20isolated%20on%20light%20background%2C%20looking%20at%20camera&width=375&height=500&seq=8&orientation=portrait" class="w-full h-full object-cover" alt="视频通话">
+            </div>
+            
+            <!-- 本地视频预览 -->
+            <div class="absolute top-4 right-4 w-24 h-32 bg-gray-800 rounded-lg overflow-hidden border border-white">
+                <img src="https://readdy.ai/api/search-image?query=portrait%20of%20an%20elderly%20Asian%20person%20looking%20at%20camera%2C%20closeup%2C%20selfie%20style%2C%20indoor%20lighting&width=100&height=120&seq=9&orientation=portrait" class="w-full h-full object-cover" alt="本地视频">
+            </div>
+            
+            <!-- 通话信息 -->
+            <div class="absolute top-4 left-4 text-white">
+                <h3 class="text-lg font-medium">李医生</h3>
+                <p class="text-sm opacity-80">通话中 00:15</p>
+            </div>
+            
+            <!-- 控制按钮 -->
+            <div class="absolute bottom-8 left-0 right-0">
+                <div class="flex justify-center space-x-6">
+                    <div class="w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center cursor-pointer">
+                        <i class="ri-mic-line ri-lg text-white"></i>
+                    </div>
+                    <div class="w-14 h-14 rounded-full bg-secondary flex items-center justify-center cursor-pointer">
+                        <i class="ri-phone-off-line ri-xl text-white"></i>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center cursor-pointer">
+                        <i class="ri-camera-switch-line ri-lg text-white"></i>
+                    </div>
+                    <div class="w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center cursor-pointer">
+                        <i class="ri-volume-up-line ri-lg text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 更新按钮状态
+                tabBtns.forEach(b => {
+                    b.classList.remove('active');
+                    b.querySelector('span').classList.remove('text-primary', 'font-medium');
+                    b.querySelector('span').classList.add('text-gray-500');
+                    b.querySelector('div').classList.remove('bg-primary');
+                    b.querySelector('div').classList.add('bg-transparent');
+                });
+                
+                btn.classList.add('active');
+                btn.querySelector('span').classList.remove('text-gray-500');
+                btn.querySelector('span').classList.add('text-primary', 'font-medium');
+                btn.querySelector('div').classList.remove('bg-transparent');
+                btn.querySelector('div').classList.add('bg-primary');
+                
+                // 更新内容区域
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 视频通话功能
+        const callButtons = document.querySelectorAll('.ri-vidicon-line');
+        const callModal = document.getElementById('call-modal');
+        const hangupButton = document.querySelector('.ri-phone-off-line').parentElement;
+        
+        callButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                callModal.classList.remove('hidden');
+            });
+        });
+        
+        hangupButton.addEventListener('click', () => {
+            callModal.classList.add('hidden');
+        });
+        
+        // 拨号键盘功能
+        const dialPad = document.querySelectorAll('#dial .grid div');
+        const phoneInput = document.querySelector('#dial input');
+        
+        dialPad.forEach(key => {
+            key.addEventListener('click', () => {
+                const digit = key.textContent;
+                phoneInput.value += digit;
+            });
+        });
+    </script>
+</body>
+</html>
